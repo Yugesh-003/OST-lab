@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Graindingg?</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f7f7f7; }
+select, input { padding: 8px; font-size: 16px; margin-top: 10px; }
+#cheata { margin-top: 20px; padding: 10px; background: white; border-radius: 6px; font-size: 18px; }
+select { width: 220px; }
+input { cursor: pointer; }
+
+    </style>
+  </head>
+  <body>
+    <select id="thing">
+      <option value="">-- What do you want --</option>
+      <option value="first">Juice undoo..</option>
+      <option value="papaya">Oru papaya juice uh</option>
+      <option value="sugar">Mathara edayeh venaam</option>
+      <option value="puffs">Pinna kuda oru mutta puffs</option>
+    </select>
+    <input type="submit" onclick="cheataa()" />
+    <div id="cheata"></div>
+  </body>
+  <script>
+    function cheataa() {
+      let thing = document.getElementById('thing').value;
+      if (thing === 'first') {
+        document.getElementById('cheata').innerHTML = 'pina jucie ilathayaa..';
+      } else if (thing === 'papaya') {
+        document.getElementById('cheata').innerHTML = 'aahh.. healthy healthyy';
+      } else if (thing === 'sugar') {
+        document.getElementById('cheata').innerHTML = 'eadaa.. healthy kuttaa';
+      } else if (thing === 'puffs') {
+        document.getElementById('cheata').innerHTML = 'ada gomaaaly..';
+      }
+    }
+  </script>
+</html>
