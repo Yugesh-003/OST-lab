@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <script>
-        // alert("This is a Dialog Box!");
-        
-        // Alert Dialog Box
-        function warning() {
-            alert("Ne kettaa!");
-        }
-    </script>
-    <input type="button" value="Enna thottaa.." onclick="warning()">
-    <br><br>
-    
-    <script>
-        function confirmAction() {
-        let result = confirm("Do you want to proceed?");
-        if (result) {
-            document.write("User chose to proceed.<br>");
-        } else {
-            document.write("User canceled the action.<br>");
-        }
-    }
-    </script>
-    <input type="button" value="Click Me" onclick="confirmAction()"></input>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dialog Box</title>
+  </head>
+  <body>
+    <center><h1>Dialog Box</h1></center>
+    <input type="button" value="Alert Box" onclick="showAlert()" />
+    <input type="button" value="Confirm Box" onclick="showConfirm()" />
+    <input type="button" value="Prompt Box" onclick="showPrompt()" />
 
-</body>
+    <script>
+      function showAlert() {
+        alert('⚠ Warning: You have not filled all the required fields! (JK)');
+      }
+      function showConfirm() {
+        let box = confirm('Are you sure? You wanna submit this form? ');
+        if (box === true) {
+          alert('Submitted');
+        } else {
+          alert('Not Submitted');
+        }
+      }
+      function showPrompt() {
+        let name = prompt('HI, whats your name');
+        if (name === null) {
+          alert('No value entered?!');
+        } else {
+          alert('Hi..' + name);
+        }
+      }
+    </script>
+  </body>
 </html>
