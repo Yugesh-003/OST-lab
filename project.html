@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Online Voting System</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #eef2f3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        background: white;
+        width: 420px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        padding: 20px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    /* Tabs */
+    .tabs {
+        display: flex;
+        margin-bottom: 15px;
+    }
+
+    .tabs button {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        font-size: 15px;
+        background: #ddd;
+    }
+
+    .tabs button.active {
+        background: #007bff;
+        color: white;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input[type="text"], input[type="date"] {
+        width: 100%;
+        padding: 8px;
+        margin: 6px 0 12px;
+    }
+
+    /* FIXED RADIO ALIGNMENT */
+    .candidate {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 8px 0;
+    }
+
+    button.submit {
+        width: 100%;
+        padding: 10px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    button.submit:hover {
+        background: #0056b3;
+    }
+
+    #result {
+        text-align: center;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>🗳 Online Voting System</h2>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="active" onclick="openTab('voteTab')">Vote</button>
+        <button onclick="openTab('resultTab')">Results</button>
+    </div>
+
+    <!-- Vote Tab -->
+    <div id="voteTab" class="tab-content active">
+        <form onsubmit="submitVote(event)">
+            <label>Name:</label>
+            <input type="text" id="name" required>
+
+            <label>Date of Birth:</label>
+            <input type="date" id="dob" required>
+
+            <label>Voter ID:</label>
+            <input type="text" id="voterId" required>
+
+            <label>Select Candidate:</label>
+
+            <div class="candidate">
+                <input type="radio" name="candidate" value="0" required>
+                <span>Alice</span>
+            </div>
+
+            <div class="candidate">
+                <input type="radio" name="candidate" value="1">
+                <span>Bob</span>
+            </div>
+
+            <div class="candidate">
+                <input type="radio" name="candidate" value="2">
+                <span>Charlie</span>
+            </div>
+
+            <button class="submit" type="submit">Submit Vote</button>
+        </form>
+    </div>
+
+    <!-- Results Tab -->
+    <div id="resultTab" class="tab-content">
+        <div id="result">No votes yet.</div>
+    </div>
+</div>
+
+<script>
+    let candidates = ["Alice", "Bob", "Charlie"];
+    let votes = [0, 0, 0];
+
+    function openTab(tabId) {
+        let tabs = document.querySelectorAll(".tab-content");
+        let buttons = document.querySelectorAll(".tabs button");
+
+        tabs.forEach(tab => tab.classList.remove("active"));
+        buttons.forEach(btn => btn.classList.remove("active"));
+
+        document.getElementById(tabId).classList.add("active");
+        event.target.classList.add("active");
+    }
+
+    function submitVote(event) {
+        event.preventDefault();
+
+        let name = document.getElementById("name").value;
+        let voterId = document.getElementById("voterId").value;
+        let selected = document.querySelector('input[name="candidate"]:checked');
+
+        let confirmVote = confirm(
+            "Confirm Vote?\n\nName: " + name + "\nVoter ID: " + voterId
+        );
+
+        if (!confirmVote) {
+            alert("Vote cancelled");
+            return;
+        }
+
+        let index = Number(selected.value);
+        votes[index]++;
+
+        alert("Vote submitted successfully!");
+
+        showResult();
+        openTab("resultTab");
+        event.target.reset();
+    }
+
+    function showResult() {
+        let maxVotes = votes[0];
+        let winnerIndex = 0;
+
+        for (let i = 1; i < votes.length; i++) {
+            if (votes[i] > maxVotes) {
+                maxVotes = votes[i];
+                winnerIndex = i;
+            }
+        }
+
+        let output = "Current Results:<br><br>";
+        for (let i = 0; i < candidates.length; i++) {
+            output += candidates[i] + ": " + votes[i] + " votes<br>";
+        }
+
+        output += "<br>🏆 Current Winner: " + candidates[winnerIndex];
+
+        document.getElementById("result").innerHTML = output;
+    }
+</script>
+
+</body>
+</html>
