@@ -94,6 +94,16 @@
         font-weight: bold;
         margin-top: 15px;
     }
+
+    .tabs button {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        font-size: 15px;
+        background: #ddd;
+        transition: transform 0.2s;
+    }
 </style>
 </head>
 
@@ -104,52 +114,63 @@
 
     <!-- Tabs -->
     <div class="tabs">
-        <button class="active" onclick="openTab('voteTab')">Vote</button>
-        <button onclick="openTab('resultTab')">Results</button>
+        <button class="active" onclick="openTab('voteTab')" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Vote</button>
+        <button onclick="openTab('resultTab')" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Results</button>
     </div>
 
     <!-- Vote Tab -->
     <div id="voteTab" class="tab-content active">
         <form onsubmit="submitVote(event)">
             <label>Name:</label>
-            <input type="text" id="name" required>
+            <input type="text" id="name" required onkeyup="validateName(event)" onfocus="this.style.borderColor='#007bff'" onblur="this.style.borderColor='#ccc'">
+            <div id="nameStatus" style="font-size:12px; color:#666;"></div>
 
             <label>Date of Birth:</label>
-            <input type="date" id="dob" required>
+            <input type="date" id="dob" required onchange="checkAge()">
+            <div id="ageStatus" style="font-size:12px; color:#666;"></div>
 
             <label>Voter ID:</label>
-            <input type="text" id="voterId" required>
+            <input type="text" id="voterId" required onkeydown="formatVoterId(event)" onfocus="this.style.borderColor='#007bff'" onblur="this.style.borderColor='#ccc'">
 
             <label>Select Candidate:</label>
 
-            <div class="candidate">
-                <input type="radio" name="candidate" value="0" required>
+            <div class="candidate" onmouseover="this.style.backgroundColor='#f0f8ff'" onmouseout="this.style.backgroundColor='transparent'">
+                <input type="radio" name="candidate" value="0" required onclick="selectCandidate('Alice')">
                 <span>Alice</span>
             </div>
 
-            <div class="candidate">
-                <input type="radio" name="candidate" value="1">
+            <div class="candidate" onmouseover="this.style.backgroundColor='#f0f8ff'" onmouseout="this.style.backgroundColor='transparent'">
+                <input type="radio" name="candidate" value="1" onclick="selectCandidate('Bob')">
                 <span>Bob</span>
             </div>
 
-            <div class="candidate">
-                <input type="radio" name="candidate" value="2">
+            <div class="candidate" onmouseover="this.style.backgroundColor='#f0f8ff'" onmouseout="this.style.backgroundColor='transparent'">
+                <input type="radio" name="candidate" value="2" onclick="selectCandidate('Charlie')">
                 <span>Charlie</span>
             </div>
 
-            <button class="submit" type="submit">Submit Vote</button>
+            <div id="selectedCandidate" style="margin:10px 0; font-weight:bold; color:#007bff;"></div>
+
+            <button class="submit" type="submit" onmouseover="this.style.backgroundColor='#0056b3'" onmouseout="this.style.backgroundColor='#007bff'">Submit Vote</button>
         </form>
     </div>
 
     <!-- Results Tab -->
     <div id="resultTab" class="tab-content">
         <div id="result">No votes yet.</div>
+        <button onclick="refreshResults()" onmouseover="this.textContent='🔄 Refresh Results'" onmouseout="this.textContent='Refresh'" style="margin-top:10px; padding:5px 10px; background:#28a745; color:white; border:none; border-radius:3px; cursor:pointer;">Refresh</button>
     </div>
 </div>
 
 <script>
     let candidates = ["Alice", "Bob", "Charlie"];
     let votes = [0, 0, 0];
+
+    // Load event - Initialize voting system
+    window.onload = function() {
+        console.log('Voting system loaded at:', new Date().toLocaleTimeString());
+        document.getElementById('name').focus();
+    };
 
     function openTab(tabId) {
         let tabs = document.querySelectorAll(".tab-content");
@@ -207,6 +228,54 @@
         output += "<br>🏆 Current Winner: " + candidates[winnerIndex];
 
         document.getElementById("result").innerHTML = output;
+    }
+
+    // Keyboard event - Name validation
+    function validateName(event) {
+        let name = event.target.value;
+        let status = document.getElementById('nameStatus');
+        if (name.length < 2) {
+            status.textContent = 'Name too short';
+            status.style.color = 'red';
+        } else {
+            status.textContent = '✓ Valid name';
+            status.style.color = 'green';
+        }
+    }
+
+    // Keyboard event - Voter ID formatting
+    function formatVoterId(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            document.querySelector('input[name="candidate"]').focus();
+        }
+    }
+
+    // Mouse event - Candidate selection
+    function selectCandidate(name) {
+        document.getElementById('selectedCandidate').textContent = `Selected: ${name}`;
+    }
+
+    // Change event - Age verification
+    function checkAge() {
+        let dob = new Date(document.getElementById('dob').value);
+        let today = new Date();
+        let age = today.getFullYear() - dob.getFullYear();
+        let status = document.getElementById('ageStatus');
+        
+        if (age >= 18) {
+            status.textContent = '✓ Eligible to vote';
+            status.style.color = 'green';
+        } else {
+            status.textContent = '✗ Must be 18+ to vote';
+            status.style.color = 'red';
+        }
+    }
+
+    // Mouse event - Refresh results
+    function refreshResults() {
+        showResult();
+        console.log('Results refreshed at:', new Date().toLocaleTimeString());
     }
 </script>
 
