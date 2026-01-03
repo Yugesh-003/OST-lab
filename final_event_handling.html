@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Visual JS Events</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #box {
+      width: 220px;
+      height: 110px;
+      background: lightblue;
+      text-align: center;
+      line-height: 110px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    #message {
+      margin-top: 10px;
+      font-size: 18px;
+      color: darkblue;
+    }
+  </style>
+</head>
+<body onload="pageLoaded()" onresize="pageResized()">
+
+  <!-- PAGE MESSAGE -->
+  <h2 id="pageStatus">Waiting...</h2>
+
+  <!-- MOUSE EVENTS -->
+  <h3>Mouse Events</h3>
+  <div id="box"
+       onclick="mouseClick()"
+       ondblclick="mouseDoubleClick()"
+       onmouseover="mouseOver()"
+       onmouseout="mouseOut()">
+    Hover / Click Me
+  </div>
+
+  <!-- KEYBOARD EVENTS -->
+  <h3>Keyboard Events</h3>
+  <input type="text"
+         id="input"
+         placeholder="Type here"
+         onkeydown="keyDown()"
+         onkeyup="keyUp()"
+         onkeypress="keyPress()"
+         onfocus="inputFocus()">
+
+  <div id="message"></div>
+
+  <script>
+    /* ======================
+       MOUSE (4)
+    ====================== */
+    function mouseClick() {
+      box.style.background = "lightgreen";
+      box.innerHTML = "Clicked!";
+    }
+
+    function mouseDoubleClick() {
+      box.style.background = "orange";
+      box.innerHTML = "Double Clicked!";
+    }
+
+    function mouseOver() {
+      box.style.background = "pink";
+      box.innerHTML = "Mouse Over";
+    }
+
+    function mouseOut() {
+      box.style.background = "lightblue";
+      box.innerHTML = "Hover / Click Me";
+    }
+
+    /* ======================
+       KEYBOARD (4)
+    ====================== */
+    function keyDown() {
+      message.innerHTML = "Key Down";
+      message.style.color = "red";
+    }
+
+    function keyUp() {
+      message.innerHTML = "Key Up";
+      message.style.color = "green";
+    }
+
+    function keyPress() {
+      message.innerHTML = "Key Pressed";
+      message.style.color = "blue";
+    }
+
+    function inputFocus() {
+      message.innerHTML = "Input Focused";
+      message.style.color = "purple";
+    }
+
+    /* ======================
+       PAGE (2)
+    ====================== */
+    function pageLoaded() {
+      pageStatus.innerHTML = "Page Loaded Successfully!";
+      pageStatus.style.color = "green";
+    }
+
+    function pageResized() {
+      pageStatus.innerHTML = "Window Resized!";
+      pageStatus.style.color = "orange";
+    }
+  </script>
+
+</body>
+</html>
