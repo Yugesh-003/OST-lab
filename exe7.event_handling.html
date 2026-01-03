@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Handling</title>
+    <style>
+        #mouse {
+            width: 100px;
+            height: 50px;
+            border: 1px solid black;
+            text-align: center;
+            line-height: 50px;
+            user-select: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <input type="button" onclick="myCick()" value="On click">
+    <input type="button" ondblclick="myDblClick()" value="Dbl click" >
+    <div id="mouse" onmousedown="myMouseDown()">hehehehe</div>
+    <script>
+        function myCick() {
+            alert("You clicked me!");
+        }
+        function myDblClick() {
+            alert("You double clicked me!");
+        }
+        function myMouseDown() {
+            // change the background color of the input field
+            document.getElementById("mouse").style.backgroundColor = "yellow";
+        }
+    </script>
+</body>
+</html>

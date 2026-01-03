@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JS Events</title>
+<style>
+  body { font-family: Arial; height: 1500px; transition: 0.3s; }
+  #box {
+    width: 250px; height: 120px;
+    background: lightblue; border: 2px solid navy;
+    text-align: center; line-height: 120px;
+    margin: 20px 0;
+  }
+</style>
+</head>
+
+<body
+onload="loadPage()"
+onscroll="scrollPage()"
+onresize="resizePage()"
+onbeforeunload="return 'Leave?'">
+
+<h2 id="text" onmouseover="over()" onmouseout="out()">Original Text</h2>
+
+<div id="box"
+onclick="setColor('yellow')"
+ondblclick="setColor('orange')"
+onmousedown="setColor('red')"
+onmouseup="setColor('lightgreen')"
+onmousemove="borderColor()"
+oncontextmenu="rightClick(event)">
+Mouse Box
+</div>
+
+<input type="text" placeholder="Type here"
+onkeydown="this.style.background='lightblue'"
+onkeypress="this.style.background='khaki'"
+onkeyup="this.style.background='lightgreen'">
+
+<script>
+function over() {
+  text.innerHTML = "Mouse Over"; text.style.color = "green";
+}
+function out() {
+  text.innerHTML = "Original Text"; text.style.color = "black";
+}
+function setColor(c) {
+  box.style.background = c;
+}
+function borderColor() {
+  box.style.borderColor = "purple";
+}
+function rightClick(e) {
+  e.preventDefault(); setColor('pink');
+}
+function loadPage() {
+  document.body.style.background = "#f0f8ff";
+}
+function scrollPage() {
+  document.body.style.background = "#e6ffe6";
+}
+function resizePage() {
+  document.body.style.background = "#ffe4e1";
+}
+</script>
+
+</body>
+</html>
