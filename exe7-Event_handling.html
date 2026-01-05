@@ -1,134 +1,116 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>JavaScript Events with Color Change</title>
-    <style>
-        body {
-            font-family: Arial;
-            height: 2000px; /* for scroll */
-        }
-
-        #box {
-            width: 300px;
-            height: 150px;
-            background-color: lightblue;
-            border: 2px solid navy;
-            text-align: center;
-            line-height: 150px;
-            margin-bottom: 20px;
-            transition: 0.3s;
-        }
-
-        #key {
-            padding: 10px;
-        }
-
-        input {
-            padding: 8px;
-            margin-top: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Visual JS Events</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #box {
+      width: 220px;
+      height: 110px;
+      background: lightblue;
+      text-align: center;
+      line-height: 110px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    #message {
+      margin-top: 10px;
+      font-size: 18px;
+      color: darkblue;
+    }
+  </style>
 </head>
+<body onload="pageLoaded()" onresize="pageResized()">
 
-<body
-    onload="pageLoad()"
-    onresize="windowResize()"
-    onscroll="pageScroll()"
-    onbeforeunload="beforeUnload()"
-    onunload="pageUnload()">
+  <!-- PAGE MESSAGE -->
+  <h2 id="pageStatus">Waiting...</h2>
 
-<h2 id="key" onmouseover="over()" onmouseout="out()">
-    Original Text
-</h2>
+  <!-- MOUSE EVENTS -->
+  <h3>Mouse Events</h3>
+  <div id="box"
+       onclick="mouseClick()"
+       ondblclick="mouseDoubleClick()"
+       onmouseover="mouseOver()"
+       onmouseout="mouseOut()">
+    Hover / Click Me
+  </div>
 
-<div id="box"
-     onclick="mouseClick()"
-     ondblclick="mouseDoubleClick()"
-     onmousedown="mouseDown()"
-     onmouseup="mouseUp()"
-     onmousemove="mouseMove()"
-     oncontextmenu="rightClick(event)">
-    Mouse Events Box
-</div>
+  <!-- KEYBOARD EVENTS -->
+  <h3>Keyboard Events</h3>
+  <input type="text"
+         id="input"
+         placeholder="Type here"
+         onkeydown="keyDown()"
+         onkeyup="keyUp()"
+         onkeypress="keyPress()"
+         onfocus="inputFocus()">
 
-<h3>Keyboard Events</h3>
-<input type="text"
-       placeholder="Type here"
-       onkeydown="keyDown(this)"
-       onkeyup="keyUp(this)"
-       onkeypress="keyPress(this)">
+  <div id="message"></div>
 
-<script>
-    /* ========= Mouse Events ========= */
-    function over() {
-        document.getElementById("key").style.color = "green";
-        document.getElementById("key").innerHTML = "Mouse Over Text";
-    }
-
-    function out() {
-        document.getElementById("key").style.color = "black";
-        document.getElementById("key").innerHTML = "Original Text";
-    }
-
+  <script>
+    /* ======================
+       MOUSE (4)
+    ====================== */
     function mouseClick() {
-        document.getElementById("box").style.backgroundColor = "yellow";
+      box.style.background = "lightgreen";
+      box.innerHTML = "Clicked!";
     }
 
     function mouseDoubleClick() {
-        document.getElementById("box").style.backgroundColor = "orange";
+      box.style.background = "orange";
+      box.innerHTML = "Double Clicked!";
     }
 
-    function mouseDown() {
-        document.getElementById("box").style.backgroundColor = "red";
+    function mouseOver() {
+      box.style.background = "pink";
+      box.innerHTML = "Mouse Over";
     }
 
-    function mouseUp() {
-        document.getElementById("box").style.backgroundColor = "lightgreen";
+    function mouseOut() {
+      box.style.background = "lightblue";
+      box.innerHTML = "Hover / Click Me";
     }
 
-    function mouseMove() {
-        document.getElementById("box").style.borderColor = "purple";
+    /* ======================
+       KEYBOARD (4)
+    ====================== */
+    function keyDown() {
+      message.innerHTML = "Key Down";
+      message.style.color = "red";
     }
 
-    function rightClick(event) {
-        event.preventDefault();
-        document.getElementById("box").style.backgroundColor = "pink";
+    function keyUp() {
+      message.innerHTML = "Key Up";
+      message.style.color = "green";
     }
 
-    /* ========= Keyboard Events ========= */
-    function keyDown(input) {
-        input.style.backgroundColor = "lightblue";
+    function keyPress() {
+      message.innerHTML = "Key Pressed";
+      message.style.color = "blue";
     }
 
-    function keyUp(input) {
-        input.style.backgroundColor = "lightgreen";
+    function inputFocus() {
+      message.innerHTML = "Input Focused";
+      message.style.color = "purple";
     }
 
-    function keyPress(input) {
-        input.style.backgroundColor = "khaki";
+    /* ======================
+       PAGE (2)
+    ====================== */
+    function pageLoaded() {
+      pageStatus.innerHTML = "Page Loaded Successfully!";
+      pageStatus.style.color = "green";
     }
 
-    /* ========= Load & Window Events ========= */
-    function pageLoad() {
-        document.body.style.backgroundColor = "#f0f8ff";
+    function pageResized() {
+      pageStatus.innerHTML = "Window Resized!";
+      pageStatus.style.color = "orange";
     }
-
-    function windowResize() {
-        document.body.style.backgroundColor = "#ffe4e1";
-    }
-
-    function pageScroll() {
-        document.body.style.backgroundColor = "#e6ffe6";
-    }
-
-    function beforeUnload() {
-        return "Leave page?";
-    }
-
-    function pageUnload() {
-        document.body.style.backgroundColor = "white";
-    }
-</script>
+  </script>
 
 </body>
 </html>
